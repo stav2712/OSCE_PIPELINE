@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}licita REPORTS{% endblock %}</title>
+
+  <!-- ===== Styles ===== -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+  <!-- Font Awesome (iconos) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  {% block head_extra %}{% endblock %}
+</head>
+<body>
+
+{% set on_etl = (request.endpoint == 'etl_page') %}
+<aside id="sidebar" class="sidebar">
+  <h1 class="brand">licita<span>REPORTS</span></h1>
+
+  <!-- + Nuevo reporte siempre va al index -->
+  <a href="{{ url_for('index') }}" class="btn-green full-width new-report">
+    <i class="fa fa-plus"></i><span>Nuevo reporte</span>
+  </a>
+
+  <nav class="chat-nav">
+    <!-- enlace dinámico entre ETL y NL2SQL -->
+    {% if on_etl %}
+      <a href="{{ url_for('index') }}" class="chat-item etl-link">
+        <i class="fa fa-comments"></i><span>NL&nbsp;→&nbsp;SQL</span>
+      </a>
+    {% else %}
+      <a href="{{ url_for('etl_page') }}" class="chat-item etl-link">
+        <i class="fa fa-cogs"></i><span>Proceso&nbsp;ETL</span>
+      </a>
+    {% endif %}
+<!--
+    <p class="group-label">AYER</p>
+    <a href="#" class="chat-item"><i class="fa fa-comments"></i> <span>Reporte “N”</span></a>
+    <a href="#" class="chat-item"><i class="fa fa-comments"></i> <span>Reporte “N”</span></a>
+
+    <p class="group-label">ÚLTIMA SEMANA</p>
+    <a href="#" class="chat-item"><i class="fa fa-comments"></i> <span>Reporte “N”</span></a>
+    <a href="#" class="chat-item"><i class="fa fa-comments"></i> <span>Reporte “N”</span></a>
+
+    <p class="group-label">ÚLTIMO MES</p>
+    <a href="#" class="chat-item"><i class="fa fa-comments"></i> <span>Reporte “N”</span></a>
+    <a href="#" class="chat-item"><i class="fa fa-comments"></i> <span>Reporte “N”</span></a>
+-->
+  </nav>
+</aside>
+
+<!-- ----------  MAIN COLUMN  ---------- -->
+<div class="main-col">
+
+    <header class="topbar">
+    <button id="burger" class="burger"><i class="fa fa-bars"></i></button>
+
+    {% if on_etl %}
+        <a href="{{ url_for('index') }}" class="etl-topbtn" title="NL→SQL">
+        <i class="fa fa-comments"></i>
+        </a>
+    {% else %}
+        <a href="{{ url_for('etl_page') }}" class="etl-topbtn" title="Proceso ETL">
+        <i class="fa fa-cogs"></i>
+        </a>
+    {% endif %}
+
+    <div class="spacer"></div>
+    <img class="avatar" src="https://avatars.githubusercontent.com/u/9919?s=64" alt="avatar">
+    </header>
+
+  <main class="main-content">
+    {% block content %}{% endblock %}
+  </main>
+</div>
+
+<!-- ----------  GLOBAL JS  ---------- -->
+<!--<script src="{{ url_for('static', filename='js/layout.js') }}"></script>-->
+<!-- Socket.IO client (versión compatible con Flask-SocketIO 5) -->
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="{{ url_for('static', filename='js/layout.js') }}"></script>
+{% block body_extra %}{% endblock %}
+</body>
+</html>

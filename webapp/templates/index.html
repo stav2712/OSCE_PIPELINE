@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}licita REPORTS – Consulta{% endblock %}
+
+{% block content %}
+<!-- Hilo de conversación -->
+<section id="chat-stream" class="chat-stream"></section>
+
+<!-- Indicadores de carga -->
+<div id="loader"   class="status-info">⏳ Inicializando el motor…</div>
+<div id="ready"    class="status-info hidden"><i class="fa fa-check"></i> Motor listo</div>
+
+<!-- Campo de entrada -->
+<form id="chat-form" class="chat-input hidden" autocomplete="off">
+  <textarea name="q" rows="1" placeholder="Escribe tu consulta…" required></textarea>
+  <button type="submit" class="send-btn"><i class="fa fa-paper-plane"></i></button>
+</form>
+{% endblock %}
+
+{% block body_extra %}
+<script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}licita REPORTS – ETL{% endblock %}
+
+{% block content %}
+<h2>Flujo ETL OSCE</h2>
+
+<button id="run-etl" class="btn-green pulse">Iniciar ETL</button>
+<pre id="etl-stream" class="etl-console"></pre>
+
+<!-- ── Overlay bloqueante ────────────────────────────── -->
+<div id="etl-overlay" class="overlay hidden" aria-hidden="true">
+  <div class="overlay-card" role="dialog" aria-modal="true">
+    <h3>Ejecutando ETL…</h3>
+
+    <!-- barra -->
+    <div class="bar-back">
+      <div id="etl-bar" class="bar-front"></div>
+    </div>
+
+    <!-- log desplazable -->
+    <pre id="etl-log" class="etl-log"></pre>
+  </div>
+</div>
+{% endblock %}
+
+{% block body_extra %}
+<script src="{{ url_for('static', filename='js/etl.js') }}"></script>
+{% endblock %}

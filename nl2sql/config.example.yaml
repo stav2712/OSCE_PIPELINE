@@ -1,0 +1,9 @@
+# Directorio donde quedaron los *_latest.parquet
+parquet_dir: "D:/OSCE_PIPELINE/final"
+model_type: openai
+openai_api_key: "tu_api"
+model_name: "gpt-4o"
+n_predict: 512
+temperature: 0
+top_p: 1
+stop: []

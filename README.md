@@ -3,7 +3,7 @@ SE USA UN VIRTUALENV DE PYTHON 3.11
 2. Descarga el instalador “Windows installer (64-bit)”.
 3. Durante la instalación, marca “Add Python 3.11 to PATH”
 
-CREACIÓN DEL AMBIENTE VIRTUAL
+CREACIÓN DEL AMBIENTE VIRTUAL:
   py -3.11 -m venv .venv  
 
 ACTIVACIÓN DEL AMBIENTE VIRTUAL:

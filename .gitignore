@@ -179,3 +179,4 @@ ola.txt
 !webapp/
 !webapp/**
 /webapp/__pycache__
+nombresColumnas.py

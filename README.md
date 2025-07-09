@@ -11,3 +11,10 @@ ACTIVACIÓN DEL AMBIENTE VIRTUAL:
 
 INSTALACIÓN DE LIBRERÍAS (proceso demorado):
   pip install -r requirements.txt
+
+EJECUTAR
+  python main.py
+
+LANZAR PRIMER ETL
+
+REALIZAR PREGUNTAS;)

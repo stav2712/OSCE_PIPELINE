@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#script prueba
 import argparse
 from pathlib import Path
 import pandas as pd

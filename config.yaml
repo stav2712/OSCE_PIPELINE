@@ -2,6 +2,6 @@ root_dir: "D:/OSCE_PIPELINE"
 sources:
   - seace_v3
   - seace_v2
-window_days: 183
+window_days: 365000
 max_workers: 6
 api_endpoint: "https://contratacionesabiertas.osce.gob.pe/api/v1/files"

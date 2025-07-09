@@ -19,9 +19,20 @@ document.querySelector(".new-report")?.addEventListener("click", ev => {
 (async () => {
   while (true) {
     const r = await fetch("/ready");
-    if (r.ok) break;
+    if (r.ok) break;                      // 200 → listo
+
+    if (r.status === 425) {               // 425 → faltan datos
+      loaderDiv.textContent =
+        "🚧 Aún no hay datos. Ve a la pestaña “Proceso ETL” y ejecútalo.";
+      // opcional: mostrar un botón que lleve a /etl
+      return;                             // ⛔ deja de consultar
+    }
+
+    // 503 → sigue intentando cada 700 ms
     await new Promise(res => setTimeout(res, 700));
   }
+
+  /* motor listo ⇒ revelamos la UI */
   loaderDiv.classList.add("hidden");
   readyDiv.classList.remove("hidden");
   form.classList.remove("hidden");

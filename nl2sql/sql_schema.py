@@ -58,12 +58,22 @@ def _colname(path: str, tbl_prefix: str) -> str:
 def build_views(con: duckdb.DuckDBPyConnection,
                 parquet_dir: Path) -> Dict[str, List[str]]:
     """
-    Recorre el directorio, crea/actualiza VIEW s y devuelve
+    Recorre el directorio, crea/actualiza VIEWs y devuelve
     {tabla: [lista_columnas_limpias]} para el prompt.
+    Si no hay archivos Parquet → FileNotFoundError.
     """
     schema: Dict[str, List[str]] = {}
 
-    for pq_file in parquet_dir.glob("*.parquet"):
+    # --- NUEVO BLOQUE DE VALIDACIÓN ---
+    pq_files = list(parquet_dir.glob("*.parquet"))
+    if not pq_files:
+        raise FileNotFoundError(
+            f"No se encontraron archivos *.parquet en {parquet_dir}. "
+            "Ejecuta el ETL antes de construir las vistas."
+        )
+    # ----------------------------------
+
+    for pq_file in pq_files:
         table_raw = pq_file.stem.lower().replace("_latest", "")
         table     = clean_identifier(table_raw)
         if table.startswith("com_"):

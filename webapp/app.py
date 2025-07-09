@@ -14,8 +14,10 @@ from flask_socketio import SocketIO, join_room
 #  Agente NL2SQL  (carga diferida)
 # ────────────────────────────────────
 from nl2sql.agent import NL2SQLAgent
+import traceback, sys
 
 AGENT: NL2SQLAgent | None = None
+_LOAD_ERR: Exception | None = None
 _RELOADING = False
 
 def _create_agent() -> NL2SQLAgent:
@@ -23,15 +25,15 @@ def _create_agent() -> NL2SQLAgent:
     cfg = Path(__file__).resolve().parents[1] / "nl2sql" / "config.yaml"
     return NL2SQLAgent(cfg, verbose=False)
 
-def _warm_up() -> None:
-    """Carga el agente en segundo plano."""
-    global AGENT
+def _warm_up():
+    global AGENT, _LOAD_ERR
     try:
         print("⏳  [warm-up] Cargando vistas y modelo NL2SQL…")
         AGENT = _create_agent()
+        _LOAD_ERR = None
         print("✅  [warm-up] Motor NL2SQL listo")
     except Exception as exc:
-        import traceback, sys
+        _LOAD_ERR = exc                     # ← guarda la excepción
         print(f"❌  [warm-up] Error al precargar: {exc!r}", file=sys.stderr)
         traceback.print_exc()
 
@@ -149,8 +151,16 @@ def ask():
 
 @app.route("/ready")
 def ready():
-    """Devuelve 200 cuando el agente está listo; 503 en caso contrario."""
-    return ("starting", 503) if AGENT is None else ("ok", 200)
+    if AGENT is not None:                 # ✔️ todo OK
+        return ("ok", 200)
+
+    # ――― sin motor ―――
+    if isinstance(_LOAD_ERR, FileNotFoundError):
+        # faltan Parquet ⇒ el usuario debe ejecutar ETL
+        return ("no_data", 425)           # 425 Too Early
+    else:
+        # cualquier otro fallo temporal o carga en curso
+        return ("loading", 503)
 
 @app.route("/download/<file_id>")
 def download_excel(file_id: str):

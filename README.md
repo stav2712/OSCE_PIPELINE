@@ -15,6 +15,6 @@ INSTALACIÓN DE LIBRERÍAS (proceso demorado):
 EJECUTAR
   python main.py
 
-LANZAR PRIMER ETL
+LANZAR PRIMER ETL (si hay error, volver a ejecutarlo)
 
 REALIZAR PREGUNTAS;)

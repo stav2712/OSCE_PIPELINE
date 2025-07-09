@@ -4,21 +4,35 @@
 {% block content %}
 <h2>Flujo ETL OSCE</h2>
 
-<button id="run-etl" class="btn-green pulse">Iniciar ETL</button>
-<pre id="etl-stream" class="etl-console"></pre>
+<!-- ── selector de ventana ─────────────────────────── -->
+<label class="flex gap-2 items-center mb-4">
+  Ventana&nbsp;(días):
+  <input id="win-days"
+         type="number"
+         min="1"
+         step="1"
+         placeholder="vacío → por defecto"
+         class="border rounded w-32 px-1 text-right">
+</label>
 
-<!-- ── Overlay bloqueante ────────────────────────────── -->
+<!-- botón -->
+<button id="run-etl" class="btn-green pulse">Iniciar ETL</button>
+
+<!-- consola fija -->
+<textarea id="etl-stream" class="etl-console" readonly wrap="off"></textarea>
+
+<!-- ── Overlay bloqueante ──────────────────────────── -->
 <div id="etl-overlay" class="overlay hidden" aria-hidden="true">
   <div class="overlay-card" role="dialog" aria-modal="true">
     <h3>Ejecutando ETL…</h3>
 
-    <!-- barra -->
+    <!-- barra de progreso -->
     <div class="bar-back">
       <div id="etl-bar" class="bar-front"></div>
     </div>
 
     <!-- log desplazable -->
-    <pre id="etl-log" class="etl-log"></pre>
+    <textarea id="etl-log" class="etl-log" readonly wrap="off"></textarea>
   </div>
 </div>
 {% endblock %}

@@ -5,6 +5,7 @@ import uuid
 import tempfile
 import pandas as pd
 
+import yaml
 from pathlib import Path
 
 from flask import Flask, jsonify, render_template, send_file, url_for, request
@@ -90,10 +91,14 @@ def etl_page():
 
 
 # -------- Rutas API ----------
+_cfg_path      = Path(__file__).resolve().parents[1] / "config.yaml"
+_CFG           = yaml.safe_load(_cfg_path.read_text(encoding="utf-8"))
+DEFAULT_WINDOW = _CFG.get("window_days", 120)
+
 @app.route("/start_etl", methods=["POST"])
 def start_etl():
     data   = request.get_json(silent=True) or {}
-    window = data.get("window_days", 120)
+    window = data.get("window_days", DEFAULT_WINDOW)  # ① usa POST, ② cfg, ③ 120
 
     job_id = str(uuid.uuid4())
     from .tasks import run_etl
@@ -102,7 +107,8 @@ def start_etl():
         args=(socketio, job_id, window),
         daemon=True
     ).start()
-    return jsonify({"job_id": job_id})
+    # envía la ventana elegida al front
+    return jsonify({"job_id": job_id, "window_days": window})
 
 @app.route("/ask", methods=["POST"])
 def ask():

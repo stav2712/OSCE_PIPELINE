@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from flask_socketio import SocketIO
 
-from ..flow import run_flow
+from flow import run_flow
 
 import logging
 

@@ -5,9 +5,9 @@ import yaml
 from pathlib import Path
 from typing import Callable, Optional
 
-from .downloader import run_download
-from .normalizer import run_normalization
-from .consolidator import run_consolidation
+from downloader import run_download
+from normalizer import run_normalization
+from consolidator import run_consolidation
 
 
 # ─────────────────────────────────────────────────────────────

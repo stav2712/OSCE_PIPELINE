@@ -12,6 +12,11 @@ ACTIVACIÓN DEL AMBIENTE VIRTUAL:
 INSTALACIÓN DE LIBRERÍAS (proceso demorado):
   pip install -r requirements.txt
 
+CAMBIAR DE NOMBRE:
+  nl2sql\config.example.yaml -> config.yaml
+
+AGREGAR API KEY DE OPENAI EN nl2sql\config.yaml
+
 EJECUTAR
   python main.py
 

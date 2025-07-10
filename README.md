@@ -20,6 +20,6 @@ AGREGAR API KEY DE OPENAI EN nl2sql\config.yaml
 EJECUTAR
   python main.py
 
-LANZAR PRIMER ETL (si hay error, volver a ejecutarlo)
+LANZAR PRIMER ETL (robusto en manejo de errores, simplemente volver a ejecutar si ocurre alguno)
 
 REALIZAR PREGUNTAS;)

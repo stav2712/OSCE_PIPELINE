@@ -15,7 +15,7 @@ def _unite(dir_with_parquets: Path):
 
 def run_consolidation():
     from pathlib import Path
-    CFG = Path(__file__).resolve().parent / "config.yaml"   # mismo directorio que el .py
+    CFG = Path(__file__).resolve().parent / "config.yaml"
     with open(CFG, encoding="utf-8") as f:
         cfg = yaml.safe_load(f)
     proc_dir  = Path(cfg["root_dir"]) / "processed" / "signatures"
